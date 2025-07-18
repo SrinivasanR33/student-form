@@ -70,6 +70,7 @@ export default function UserForm() {
           value={(form as any)[field] || ''}
           onChange={handleChange}
           error={!!errors[field]}
+          disabled={['name', 'phoneNumber', 'email'].includes(field)}
           helperText={errors[field] || ''}
         />
       ))}

@@ -17,7 +17,6 @@ export default function UserProfile() {
   const [snackbar, setSnackbar] = useState('');
  useEffect(() => {
     if (!data?.form?.submitted) router.push('/user/form');
-    console.log(data,"data")
   }, [data]);
   useEffect(() => {
     if (error) {

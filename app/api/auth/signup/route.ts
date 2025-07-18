@@ -2,33 +2,44 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
-import twilio from 'twilio';
-
-const client = twilio(process.env.TWILIO_ACCOUNT_SID!, process.env.TWILIO_AUTH_TOKEN!);
-const serviceSid = process.env.TWILIO_SERVICE_ID!;
 
 export async function POST(req: Request) {
   await dbConnect();
+
   const { name, email, phoneNumber } = await req.json();
+  const apiKey = process.env.TWO_FACTOR_API_KEY;
+
+  if (!apiKey) {
+    return NextResponse.json({ success: false, message: '2Factor API Key not configured' }, { status: 500 });
+  }
 
   const existing = await User.findOne({ phoneNumber });
   if (existing) {
     return NextResponse.json({ success: false, message: 'User already exists' });
   }
 
-  const formattedPhone = phoneNumber.startsWith('+') ? phoneNumber : `+91${phoneNumber}`;
+  const formattedPhone = phoneNumber.startsWith('+91') ? phoneNumber : `+91${phoneNumber}`;
 
-  // 1. Save user with verified: false
-  await User.create({ name, email, phoneNumber, verified: false });
+  // Step 1: Save user with verified: false
+  const newUser = await User.create({
+    name,
+    email,
+    phoneNumber: phoneNumber,
+    verified: false
+  });
 
-  // 2. Send OTP
-  await client.verify.v2.services(serviceSid)
-    .verifications
-    .create({ to: formattedPhone, channel: 'sms' });
+  // Step 2: Send OTP via 2Factor
+  const otpRes = await fetch(`https://2factor.in/API/V1/${apiKey}/SMS/${formattedPhone}/AUTOGEN`);
+  const otpData = await otpRes.json();
+
+  if (otpData.Status !== 'Success') {
+    return NextResponse.json({ success: false, message: otpData.Details }, { status: 400 });
+  }
 
   return NextResponse.json({
     success: true,
-    message: 'OTP sent for signup',
-    data: { phoneNumber }
+    message: 'OTP sent via 2Factor',
+    sessionId: otpData.Details, // Needed for verification
+    userId: newUser._id
   });
 }

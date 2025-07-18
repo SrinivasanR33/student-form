@@ -18,6 +18,7 @@ interface OtpPayload {
 interface VerifyOtpPayload {
   phoneNumber: string | null;
   otp: string;
+  sessionId:string
 }
 
 export const authApi = createApi({

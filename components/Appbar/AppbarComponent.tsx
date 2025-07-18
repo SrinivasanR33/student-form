@@ -49,6 +49,7 @@ export default function AppBarComponent() {
 
         router.push('/user/form');
     }
+    handleMenuClose()
   };
 
   return (
