@@ -11,7 +11,7 @@ export default function VerifyOtpPage() {
   const phone = typeof window !== 'undefined' ? localStorage.getItem('phone') : '';
 
   const handleVerify = async () => {
-    const res = await verifyOtp({ phoneNumber: phone, otp }).unwrap();
+    const res = await verifyOtp({ phoneNumber: phone, otp,sessionId:'' }).unwrap();
     if (res.success) {
       alert('OTP Verified!');
       router.push('/');
