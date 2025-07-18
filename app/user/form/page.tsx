@@ -50,14 +50,14 @@ export default function UserForm() {
     if (!validate()) return;
     try {
       await submitForm(form).unwrap();
-      router.push('/user/profile');
+      router.push('/');
     } catch (err) {
       setSnackbar('Failed to save form');
     }
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto', mt: 5 }}>
+    <Box sx={{ maxWidth: 600,width:"100%", mx: 'auto', mt: 5 }}>
       <Typography variant="h6">User Form</Typography>
       {Object.keys(form).map((field) => (
         <TextField
@@ -74,9 +74,12 @@ export default function UserForm() {
           helperText={errors[field] || ''}
         />
       ))}
-      <Button variant="contained" onClick={handleSubmit} disabled={submitting}>
+      <Box className="flex w-[100%] justify-center pt-2">
+
+      <Button variant="contained"  onClick={handleSubmit} disabled={submitting}>
         {submitting ? <CircularProgress size={24} /> : 'Save'}
       </Button>
+      </Box>
       <Snackbar
         open={!!snackbar}
         autoHideDuration={3000}

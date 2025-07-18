@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
   return NextResponse.json({
     success: true,
-    message: 'OTP sent via 2Factor',
+    message: 'OTP sent Successfully',
     sessionId: otpData.Details, // Needed for verification
     userId: newUser._id
   });

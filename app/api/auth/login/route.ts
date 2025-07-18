@@ -30,7 +30,7 @@ console.log("OTP API Response →", data);
 
   return NextResponse.json({
     success: true,
-    message: "OTP sent via 2Factor",
+    message: "OTP sent Successfully",
     sessionId: data.Details, // Save this on client side for verify step
   });
 }
