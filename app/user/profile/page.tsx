@@ -34,7 +34,7 @@ export default function UserProfile() {
 
   if (!data?.form) {
     return (
-      <Box sx={{ textAlign: 'center', mt: 5 }}>
+      <Box sx={{ textAlign: 'center', mt: 5 ,p:3}}>
         <Typography>No form data found</Typography>
         <Button variant="contained" onClick={() => router.push('/user/form')}>
           Fill Form
@@ -46,7 +46,7 @@ export default function UserProfile() {
   const { name, phoneNumber, email, degree, age, dateOfBirth, gender } = data.form;
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto', mt: 5 }}>
+    <Box sx={{ maxWidth: 600, mx: 'auto', mt: 5 ,p:3}}>
         <Box className={"flex justify-between items-center gap-2"}>
 
       <Typography variant="h6" className='pb-0'>

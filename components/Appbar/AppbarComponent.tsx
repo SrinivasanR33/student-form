@@ -23,7 +23,7 @@ export default function AppBarComponent() {
   const user = useAppSelector((state) => state.auth.user);
   const name = user?.name || user?.phoneNumber || 'User';
   const initials = name?.charAt(0).toUpperCase();
-  const { data, isLoading, error } = useGetUserFormQuery(null);
+  const { data, isLoading, error } = useGetUserFormQuery(null,{refetchOnMountOrArgChange:true});
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 

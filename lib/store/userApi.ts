@@ -12,9 +12,11 @@ export const userApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['UserForm'], // 🔹 Declare tag types here
   endpoints: (builder) => ({
     getUserForm: builder.query({
       query: () => 'user/form',
+      providesTags: ['UserForm'], // ✅ Provides the 'UserForm' tag
     }),
     submitUserForm: builder.mutation({
       query: (formData) => ({
@@ -22,6 +24,7 @@ export const userApi = createApi({
         method: 'POST',
         body: formData,
       }),
+      invalidatesTags: ['UserForm'], // ✅ Invalidates the tag to refresh 'getUserForm'
     }),
   }),
 });

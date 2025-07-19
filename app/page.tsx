@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <main className="flex flex-col items-center justify-center min-h-[80vh]">
         <Typography variant="h4" className="mt-10">
-          Welcome to the Student Form Page 🎓
+          Welcome to the Student Form Portal 🎓
         </Typography>
       </main>
     </>
